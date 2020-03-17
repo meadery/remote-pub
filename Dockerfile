@@ -20,6 +20,7 @@ COPY package*.json ./
 RUN npm ci --only=production
 
 COPY --from=base /app/build /app/build
+COPY views/ /app/views
 
 EXPOSE 5000
 CMD ["node", "/app/build/index.js" ]
