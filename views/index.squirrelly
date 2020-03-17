@@ -1,0 +1,10 @@
+<html lang="en">
+    <head>
+        <title>{{pageTitle}}</title>
+    </head>
+    <body>
+        <main>
+            <h1>Hello. Welcome to {{pubName}}</h1>
+        </main>
+    </body>
+</html>
