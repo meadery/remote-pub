@@ -16,4 +16,7 @@ jobs:
   include:
     - stage: check-docker
       node_js: 13
-      script: docker-compose run remote-pub npm test
+      install:
+        - docker-compose build
+      script:
+        - docker-compose run remote-pub npm test
