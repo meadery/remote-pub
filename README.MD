@@ -1,5 +1,7 @@
 # Ye ~Olde~ Remote Pub
-Web app for running a remote pub
+Web app for running a remote pub.
+
+Currently running at: https://the-ponderous-snail.herokuapp.com/
 
 ## Development
 Built with typescript on node.
