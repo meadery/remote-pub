@@ -2,7 +2,7 @@ import express from "express";
 import { pubName, mainRoomLink } from "./config";
 
 const app = express();
-const port: string | number = process.env.PORT || 5000;
+const port = Number(process.env.PORT || 5000);
 
 app.set("view engine", "squirrelly");
 app.set("views", "views");
@@ -16,4 +16,4 @@ app.use("*", (req, res) => {
 });
 
 //create a server object:
-app.listen(port, () => console.log(`hosting @${port}`));
+app.listen(port, "0.0.0.0", () => console.log(`hosting @${port}`));

@@ -2,11 +2,21 @@ language: node_js
 sudo: false
 node_js:
   - 10
-  - 9
-  - 8
+  - 12
+  - 13
 cache: npm
+services:
+  - docker
 install:
   - npm install
 script:
   - npm test
   - npm run lint
+jobs:
+  include:
+    - stage: check-docker
+      node_js: 13
+      install:
+        - docker-compose build
+      script:
+        - docker-compose run remote-pub npm test

@@ -18,6 +18,9 @@ Built with typescript on node.
 if linting fails:
 `npm run lint-fix`
 
+### Running & Testing without Node (using Docker)
+To run the tests: `docker-compose run remote-pub npm test`
+To run a local server: `docker-compose run remote-pub`
 
 ## Design goals
 (These are a bit work in progress).
