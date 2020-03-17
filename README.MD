@@ -1,4 +1,4 @@
-# Ye ~Olde~ Remote Pub
+# Ye ~Olde~ Moderne Remote Pub
 Web app for running a remote pub.
 
 Currently running at: https://the-ponderous-snail.herokuapp.com/
