@@ -6,9 +6,8 @@ export const mockRequest = (sessionData: any = null, body: any = null): Request 
     body
 });
 
-export const mockResponse = () => {
-    // @ts-ignore
-    const res: Response = {};
+export const mockResponse = (): Response => {
+    const res: any = {};
     res.status = jest.fn().mockReturnValue(res);
     res.json = jest.fn().mockReturnValue(res);
     res.render = jest.fn().mockReturnValue(res);

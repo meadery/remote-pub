@@ -9,4 +9,9 @@ module.exports =  {
         ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
         sourceType:  'module',  // Allows for the use of imports
     },
+    rules: {
+        // If we add or ignore these things it's for a reason
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/ban-ts-ignore": "off"
+    }
 };
