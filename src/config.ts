@@ -1,5 +1,3 @@
-const pubName: string = process.env.PUB_NAME || "Ye Olde Default";
-const mainRoomLink: string =
-    process.env.MAIN_ROOM || "https://hangouts.google.com/";
-
-export { pubName, mainRoomLink };
+export const pubName: string = process.env.PUB_NAME || "Ye Olde Default";
+export const mainRoomLink: string = process.env.MAIN_ROOM || "https://hangouts.google.com/";
+export const port = Number(process.env.PORT || 5000);
