@@ -6,12 +6,12 @@ describe("homePage", () => {
         const req = mockRequest();
         const res = mockResponse();
 
-        home(req, res);
+        home(req, res, { pubName: "Ye Olde Teste", mainRoomLink: "some.link" });
 
         expect(res.render).toHaveBeenCalledWith("index", {
-            mainRoomLink: "https://hangouts.google.com/",
-            pageTitle: "Welcome to Ye Olde Default",
-            pubName: "Ye Olde Default"
+            mainRoomLink: "some.link",
+            pageTitle: "Welcome to Ye Olde Teste",
+            pubName: "Ye Olde Teste"
         });
     });
 });

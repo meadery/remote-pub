@@ -1,10 +1,14 @@
 import { Request, Response } from "express";
-import { mainRoomLink, pubName } from "../config";
 
-export function home(req: Request, res: Response): void {
+interface PubConfig {
+    pubName: string;
+    mainRoomLink: string;
+}
+
+export function home(req: Request, res: Response, pub: PubConfig): void {
     res.render("index", {
-        pageTitle: `Welcome to ${pubName}`,
-        pubName: pubName,
-        mainRoomLink: mainRoomLink
+        pageTitle: `Welcome to ${pub.pubName}`,
+        pubName: pub.pubName,
+        mainRoomLink: pub.mainRoomLink
     });
 }
