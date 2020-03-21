@@ -12,3 +12,7 @@ export function home(req: Request, res: Response, pub: PubConfig): void {
         mainRoomLink: pub.mainRoomLink
     });
 }
+
+export function newTable(req: Request, res: Response): void {
+    res.json({ tableName: req.body.tableName, chatUrl: req.body.chatUrl });
+}
