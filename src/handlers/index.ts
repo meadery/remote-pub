@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { RedisClient } from "redis";
 
 interface PubConfig {
     pubName: string;
@@ -13,6 +14,6 @@ export function home(req: Request, res: Response, pub: PubConfig): void {
     });
 }
 
-export function newTable(req: Request, res: Response): void {
+export function newTable(req: Request, res: Response, redisClient: RedisClient): void {
     res.json({ tableName: req.body.tableName, chatUrl: req.body.chatUrl });
 }
