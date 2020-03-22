@@ -2,10 +2,12 @@ import express from "express";
 import { home, newTable } from "./handlers";
 import * as config from "./config";
 import { createClient as createMockRedisClient } from "redis-mock";
+import { createClient as createRedisClient } from "redis";
+import { redisUrl } from "./config";
 
 const app = express();
 
-const redisClient = createMockRedisClient(); // TODO: Actual load a real redis client sometimes
+const redisClient = redisUrl ? createRedisClient({ url: redisUrl }) : createMockRedisClient();
 
 app.set("view engine", "squirrelly");
 app.set("views", "views");

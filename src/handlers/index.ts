@@ -14,6 +14,6 @@ export function home(req: Request, res: Response, pub: PubConfig): void {
     });
 }
 
-export function newTable(req: Request, res: Response, redisClient: RedisClient): void {
+export function newTable(req: Request, res: Response, _redisClient: RedisClient): void {
     res.json({ tableName: req.body.tableName, chatUrl: req.body.chatUrl });
 }
