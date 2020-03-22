@@ -19,5 +19,8 @@ export async function home(req: Request, res: Response, pub: PubConfig, tables: 
 
 export async function newTable(req: Request, res: Response, tables: TableStorage): Promise<any> {
     const tableData: TableData = { tableName: req.body.tableName, chatUrl: req.body.chatUrl };
+    if (!tableData.tableName || !tableData.chatUrl) {
+        return res.sendStatus(400);
+    }
     return await tables.addNewTable(tableData).then(success => res.json({ success: success }));
 }
