@@ -1,4 +1,5 @@
 import { mockRequest, mockResponse } from "../testHelpers/express";
+import { createClient as createMockRedisClient } from "redis-mock";
 import { home } from "./index";
 
 describe("homePage", () => {
@@ -6,10 +7,11 @@ describe("homePage", () => {
         const req = mockRequest();
         const res = mockResponse();
 
-        home(req, res, { pubName: "Ye Olde Teste", mainRoomLink: "some.link" });
+        await home(req, res, { pubName: "Ye Olde Teste", mainRoomLink: "some.link" }, createMockRedisClient());
 
         expect(res.render).toHaveBeenCalledWith("index", {
             mainRoomLink: "some.link",
+            tables: [],
             pageTitle: "Welcome to Ye Olde Teste",
             pubName: "Ye Olde Teste"
         });

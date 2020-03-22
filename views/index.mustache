@@ -10,6 +10,14 @@
         <main>
             <h1>Hello. Welcome to {{pubName}}</h1>
             <a href="{{mainRoomLink}}">Click here to go to the main bar</a>
+            <h2>Open Tables</h2>
+            <ul>
+                {{#tables}}
+                    <li>
+                        <a href='{{chatUrl}}'>{{tableName}}</a>
+                    </li>
+                {{/tables}}
+            </ul>
         </main>
     </body>
 </html>
