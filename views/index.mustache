@@ -22,7 +22,7 @@
                 <label for="tableName">Name for the new table: </label>
                 <input type="text" name="tableName" id="tableName" required>
                 <label for="chatUrl">Url for the video chat: </label>
-                <input type="text" name="chatUrl" id="chatUrl" pattern="{{validChatUrlRegex}}" placeholder="https://hangouts.google.com/" aria-label="Url link to a video chat room (currently google hangouts only)" title="Url link to a video chat room (currently google hangouts only)" required>
+                <input type="text" name="chatUrl" id="chatUrl" pattern="{{validChatUrlRegex}}" placeholder="https://" aria-label="Url link to a video chat room" title="must be a google hangout, zoom or whereby link" required>
                 <input type="submit" value="add table">
             </form>
         </main>

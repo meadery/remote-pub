@@ -3,7 +3,11 @@ import { promisify } from "util";
 
 const TABLE_KEY = "public-tables";
 
-export const chatUrlPattern = "https://hangouts.google.com/(.+)";
+const googleHangout = `https://hangouts.google.com/(.+)`;
+const whereby = `https://whereby.com/(.+)`;
+const zoom = `https://([^\.]+).zoom.us/(.+)`;
+
+export const chatUrlPattern = `(${googleHangout})|(${whereby})|(${zoom})`;
 const chatUrlRegex = new RegExp(chatUrlPattern);
 
 export interface TableData {
@@ -29,7 +33,7 @@ export function redisTableStorage(redisClient: RedisClient): TableStorage {
             throw "Invalid table data - must contain a tableName and a chatUrl";
         }
         if (!chatUrlRegex.test(data.chatUrl)) {
-            throw "Invalid chat url - must be a google hangout link";
+            throw "Invalid chat url - must be a google hangout, zoom or whereby link";
         }
         // @ts-ignore
         return rpush(TABLE_KEY, JSON.stringify(data)).then(tablesCreated => tablesCreated > 0);
