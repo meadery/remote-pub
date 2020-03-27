@@ -15,7 +15,7 @@ describe("Smoke test the app", () => {
 });
 
 describe("Table creation endpont", () => {
-    let goodChatUrl = "https://hangouts.google.com/eatmyshorts";
+    const goodChatUrl = "https://hangouts.google.com/eatmyshorts";
 
     it("can create tables with form post data and then display then on the home page", async () => {
         await request(app)
