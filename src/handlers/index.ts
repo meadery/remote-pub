@@ -22,5 +22,5 @@ export async function newTable(req: Request, res: Response, tables: TableStorage
     if (!tableData.tableName || !tableData.chatUrl) {
         return res.sendStatus(400);
     }
-    return await tables.addNewTable(tableData).then(success => res.json({ success: success }));
+    return await tables.addNewTable(tableData).then(() => res.redirect("/"));
 }

@@ -18,6 +18,13 @@
                     </li>
                 {{/tables}}
             </ul>
+            <form action="/table" method="post">
+                <label for="tableName">Name for the new table: </label>
+                <input type="text" name="tableName" id="tableName" required>
+                <label for="chatUrl">Url for the video chat: </label>
+                <input type="text" name="chatUrl" id="chatUrl" required>
+                <input type="submit" value="add table">
+            </form>
         </main>
     </body>
 </html>

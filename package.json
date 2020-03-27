@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "jest test",
-    "dev": "nodemon -x ts-node src/index.ts",
+    "dev": "nodemon -e js,ts,mustache -x ts-node src/index.ts",
     "start": "node build/index.js",
     "build": "tsc",
     "lint": "eslint 'src/**/*.{js,ts,tsx}'",
