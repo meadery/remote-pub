@@ -15,28 +15,18 @@ describe("Smoke test the app", () => {
 });
 
 describe("Table creation endpont", () => {
+    let goodChatUrl = "https://hangouts.google.com/eatmyshorts";
+
     it("can create tables with form post data and then display then on the home page", async () => {
         await request(app)
             .post("/table")
-            .send("tableName=test_table&chatUrl=www.eatmyshorts.com");
+            .send(`tableName=test_table&chatUrl=${goodChatUrl}`);
 
         const res = await request(app)
             .get("/")
             .send();
         expect(res.status).toEqual(200);
-        expect(res.text).toContain("<a href='www.eatmyshorts.com'>test_table</a>");
-    });
-
-    it("can create tables with form post data and then display then on the home page", async () => {
-        await request(app)
-            .post("/table")
-            .send("tableName=test_table&chatUrl=www.eatmyshorts.com");
-
-        const res = await request(app)
-            .get("/")
-            .send();
-        expect(res.status).toEqual(200);
-        expect(res.text).toContain("<a href='www.eatmyshorts.com'>test_table</a>");
+        expect(res.text).toContain(`<a href='${goodChatUrl}'>test_table</a>`);
     });
 
     it("requires a chatUrl", async () => {
@@ -50,7 +40,16 @@ describe("Table creation endpont", () => {
     it("requires a tableName", async () => {
         const res = await request(app)
             .post("/table")
-            .send("chatUrl=www.eatmyshorts.com");
+            .send(`chatUrl=${goodChatUrl}`);
+
+        expect(res.status).toEqual(400);
+    });
+
+    // TODO: More than just google hangouts
+    it("validates that the provided url is a google hangout", async () => {
+        const res = await request(app)
+            .post("/table")
+            .send(`tableName=test_table&chatUrl=http://diceapi.com`);
 
         expect(res.status).toEqual(400);
     });

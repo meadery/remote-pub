@@ -3,6 +3,9 @@ import { promisify } from "util";
 
 const TABLE_KEY = "public-tables";
 
+export const chatUrlPattern = "https://hangouts\.google\.com/(.+)";
+const chatUrlRegex = new RegExp(chatUrlPattern);
+
 export interface TableData {
     tableName: string;
     chatUrl: string;
@@ -22,6 +25,9 @@ export function redisTableStorage(redisClient: RedisClient): TableStorage {
     };
 
     const addNewTable = async (data: TableData): Promise<boolean> => {
+        if (!chatUrlRegex.test(data.chatUrl)) {
+            throw "Invalid chat url - must be a google hangout link"
+        }
         // @ts-ignore
         return rpush(TABLE_KEY, JSON.stringify(data)).then(tablesCreated => tablesCreated > 0);
     };

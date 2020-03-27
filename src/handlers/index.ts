@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { TableData, TableStorage } from "../storage/tables";
+import {chatUrlPattern, TableData, TableStorage} from "../storage/tables";
 
 interface PubConfig {
     pubName: string;
@@ -12,7 +12,8 @@ export async function home(req: Request, res: Response, pub: PubConfig, tables: 
             pageTitle: `Welcome to ${pub.pubName}`,
             pubName: pub.pubName,
             mainRoomLink: pub.mainRoomLink,
-            tables: tables
+            tables: tables,
+            validChatUrlRegex: chatUrlPattern
         });
     });
 }
@@ -22,5 +23,5 @@ export async function newTable(req: Request, res: Response, tables: TableStorage
     if (!tableData.tableName || !tableData.chatUrl) {
         return res.sendStatus(400);
     }
-    return await tables.addNewTable(tableData).then(() => res.redirect("/"));
+    return await tables.addNewTable(tableData).then(() => res.redirect("/")).catch(() => res.sendStatus(400));
 }
