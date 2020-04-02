@@ -2,6 +2,8 @@ import { RedisClient } from "redis";
 import { promisify } from "util";
 
 const TABLE_KEY = "public-tables";
+// 1 hour expiry time
+const TABLE_EXPIRY_MILLISECONDS = 60 * 60 * 1000;
 
 const googleHangout = `https://hangouts.google.com/(.+)`;
 const whereby = `https://whereby.com/(.+)`;
@@ -21,11 +23,20 @@ export interface TableStorage {
 }
 
 export function redisTableStorage(redisClient: RedisClient): TableStorage {
-    const rpush = promisify(redisClient.rpush).bind(redisClient);
-    const lrange = promisify(redisClient.lrange).bind(redisClient);
+    const zrangebyscore = promisify(redisClient.zrangebyscore).bind(redisClient);
+    const zadd = promisify(redisClient.zadd).bind(redisClient);
+    const zremrangebyscore = promisify(redisClient.zremrangebyscore).bind(redisClient);
 
     const getTables = (): Promise<TableData[]> => {
-        return lrange(TABLE_KEY, 0, -1).then(rawTables => rawTables.map(it => JSON.parse(it)));
+        const now = Date.now();
+        const oldestTable = now - TABLE_EXPIRY_MILLISECONDS;
+
+        return zrangebyscore(TABLE_KEY, oldestTable, now + 1).then(rawTables => {
+            // start a request to remove old tables. No real need to wait for this to complete
+            zremrangebyscore(TABLE_KEY, 0, oldestTable);
+            // @ts-ignore
+            return rawTables.map(it => JSON.parse(it));
+        });
     };
 
     const addNewTable = async (data: TableData): Promise<boolean> => {
@@ -35,8 +46,10 @@ export function redisTableStorage(redisClient: RedisClient): TableStorage {
         if (!chatUrlRegex.test(data.chatUrl)) {
             throw "Invalid chat url - must be a google hangout, zoom or whereby link";
         }
+        // Stores in a zset with the creation date as an index
+        // this makes it easy for us to clear out old data
         // @ts-ignore
-        return rpush(TABLE_KEY, JSON.stringify(data)).then(tablesCreated => tablesCreated > 0);
+        return zadd(TABLE_KEY, Date.now(), JSON.stringify(data)).then(tablesCreated => tablesCreated > 0);
     };
 
     return { addNewTable, getTables };
